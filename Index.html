@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Open Member - Form Pendaftaran</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --night: #0E1230;
+    --violet: #2A1B5E;
+    --ice: #5CE1E6;
+    --gold: #FFC83D;
+    --bone: #F2F4FF;
+    --field: #171C45;
+    --line: #333A78;
+    --error: #FF7A8A;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background:
+      radial-gradient(circle at 15% 0%, var(--violet) 0%, transparent 55%),
+      var(--night);
+    color: var(--bone);
+    min-height: 100vh;
+    padding: 32px 16px 56px;
+    line-height: 1.5;
+  }
+  .wrap { max-width: 520px; margin: 0 auto; }
+
+  header { margin-bottom: 24px; }
+  h1 {
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 700;
+    font-size: clamp(2.4rem, 9vw, 3.4rem);
+    line-height: 1;
+    letter-spacing: 0.01em;
+  }
+  header p { margin-top: 10px; color: #B9BFE6; max-width: 42ch; }
+
+  /* Panel bergaya kartu karakter: sudut terpotong */
+  .card {
+    background: linear-gradient(160deg, #1B2158 0%, #141943 100%);
+    padding: 28px 22px 26px;
+    clip-path: polygon(0 0, calc(100% - 28px) 0, 100% 28px, 100% 100%, 28px 100%, 0 calc(100% - 28px));
+    border-left: 3px solid var(--ice);
+  }
+
+  .field { margin-bottom: 22px; }
+  label, .label {
+    display: block;
+    font-weight: 600;
+    font-size: 0.95rem;
+    margin-bottom: 8px;
+  }
+  .hint { font-weight: 400; color: #9AA1D3; font-size: 0.85rem; margin-left: 4px; }
+
+  input[type="text"], input[type="tel"], input[type="number"] {
+    width: 100%;
+    background: var(--field);
+    border: 1.5px solid var(--line);
+    border-radius: 6px;
+    color: var(--bone);
+    font: inherit;
+    padding: 13px 14px;
+    transition: border-color .15s;
+  }
+  input::placeholder { color: #6B72A8; }
+  input:focus { outline: none; border-color: var(--ice); box-shadow: 0 0 0 3px rgba(92,225,230,.2); }
+  input.invalid { border-color: var(--error); }
+
+  /* Tombol pilihan (radio) */
+  .choices { display: flex; flex-wrap: wrap; gap: 10px; }
+  .choices input { position: absolute; opacity: 0; pointer-events: none; }
+  .choices label {
+    margin: 0;
+    cursor: pointer;
+    background: var(--field);
+    border: 1.5px solid var(--line);
+    border-radius: 6px;
+    padding: 11px 18px;
+    font-weight: 500;
+    transition: border-color .15s, background .15s, color .15s;
+  }
+  .choices label:hover { border-color: #5A63B5; }
+  .choices input:checked + label {
+    background: var(--gold);
+    border-color: var(--gold);
+    color: #241A00;
+    font-weight: 600;
+  }
+  .choices input:focus-visible + label { outline: 3px solid var(--ice); outline-offset: 2px; }
+
+  .msg { color: var(--error); font-size: 0.85rem; margin-top: 6px; min-height: 1em; }
+
+  button[type="submit"] {
+    width: 100%;
+    margin-top: 6px;
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 700;
+    font-size: 1.3rem;
+    letter-spacing: 0.04em;
+    background: var(--ice);
+    color: #05202B;
+    border: 0;
+    border-radius: 6px;
+    padding: 14px;
+    cursor: pointer;
+    transition: transform .1s, filter .15s;
+  }
+  button[type="submit"]:hover { filter: brightness(1.08); }
+  button[type="submit"]:active { transform: translateY(1px); }
+  button[type="submit"]:disabled { opacity: .6; cursor: wait; }
+  button:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
+
+  .hp { position: absolute; left: -9999px; }
+
+  /* Layar sukses */
+  .done { display: none; text-align: left; padding: 8px 0; }
+  .done h2 { font-family: 'Rajdhani', sans-serif; font-size: 2rem; color: var(--gold); margin-bottom: 8px; }
+  .done p { color: #C9CEF0; }
+  .done button {
+    margin-top: 18px; background: transparent; color: var(--ice);
+    border: 1.5px solid var(--ice); border-radius: 6px; padding: 10px 18px;
+    font: inherit; font-weight: 600; cursor: pointer;
+  }
+
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Open Member</h1>
+    <p>Isi data di bawah untuk daftar jadi member. Admin akan menghubungi lewat WhatsApp.</p>
+  </header>
+
+  <div class="card">
+    <form id="form" novalidate>
+      <!-- Anti-spam -->
+      <input type="text" name="_honey" class="hp" tabindex="-1" autocomplete="off">
+
+      <div class="field">
+        <label for="nickname">Nickname</label>
+        <input type="text" id="nickname" name="Nickname" placeholder="Nama panggilan di game" autocomplete="nickname" required>
+        <div class="msg" data-for="nickname"></div>
+      </div>
+
+      <div class="field">
+        <label for="idgame">ID Game</label>
+        <input type="text" id="idgame" name="ID Game" placeholder="Contoh: 123456789" inputmode="numeric" required>
+        <div class="msg" data-for="idgame"></div>
+      </div>
+
+      <div class="field">
+        <label for="wa">No. HP / WhatsApp</label>
+        <input type="tel" id="wa" name="No. HP / WhatsApp" placeholder="08xxxxxxxxxx" inputmode="tel" autocomplete="tel" required>
+        <div class="msg" data-for="wa"></div>
+      </div>
+
+      <div class="field">
+        <label for="usia">Usia</label>
+        <input type="number" id="usia" name="Usia" placeholder="Contoh: 18" min="10" max="80" inputmode="numeric" required>
+        <div class="msg" data-for="usia"></div>
+      </div>
+
+      <div class="field">
+        <span class="label">Level Akun</span>
+        <div class="choices" role="radiogroup" aria-label="Level Akun">
+          <input type="radio" id="lv1" name="Level Akun" value="1 - 20"><label for="lv1">1 - 20</label>
+          <input type="radio" id="lv2" name="Level Akun" value="21 - 40"><label for="lv2">21 - 40</label>
+          <input type="radio" id="lv3" name="Level Akun" value="41 - 60"><label for="lv3">41 - 60</label>
+          <input type="radio" id="lv4" name="Level Akun" value="61 - 80"><label for="lv4">61 - 80</label>
+          <input type="radio" id="lv5" name="Level Akun" value="80+"><label for="lv5">80+</label>
+        </div>
+        <div class="msg" data-for="level"></div>
+      </div>
+
+      <div class="field">
+        <span class="label">Siap Cn? <span class="hint">(custom room)</span></span>
+        <div class="choices" role="radiogroup" aria-label="Siap Cn">
+          <input type="radio" id="cn1" name="Siap Cn" value="Siap"><label for="cn1">Siap</label>
+          <input type="radio" id="cn2" name="Siap Cn" value="Belum siap"><label for="cn2">Belum siap</label>
+        </div>
+        <div class="msg" data-for="cn"></div>
+      </div>
+
+      <!-- Pengaturan FormSubmit -->
+      <input type="hidden" name="_subject" value="Pendaftar Member Baru">
+      <input type="hidden" name="_captcha" value="false">
+      <input type="hidden" name="_template" value="table">
+
+      <button type="submit" id="btn">Daftar sekarang</button>
+      <div class="msg" id="formError" role="alert" style="margin-top:12px;"></div>
+    </form>
+
+    <div class="done" id="done" role="status">
+      <h2>Pendaftaran terkirim</h2>
+      <p>Data kamu sudah diterima admin. Tunggu kabar lewat WhatsApp ya.</p>
+      <button type="button" id="again">Daftarkan orang lain</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ============================================================
+  // GANTI dengan email kamu. Contoh: "namakamu@gmail.com"
+  // ============================================================
+  const EMAIL_TUJUAN = "GANTI_DENGAN_EMAIL_KAMU@gmail.com";
+
+  const form = document.getElementById('form');
+  const btn = document.getElementById('btn');
+  const done = document.getElementById('done');
+  const formError = document.getElementById('formError');
+
+  function setMsg(key, text) {
+    const el = document.querySelector('[data-for="' + key + '"]');
+    if (el) el.textContent = text;
+  }
+
+  function validate() {
+    let ok = true;
+    const nick = form.Nickname.value.trim();
+    const id = form['ID Game'].value.trim();
+    const wa = form['No. HP / WhatsApp'].value.replace(/[\s-]/g, '');
+    const usia = Number(form.Usia.value);
+
+    ['nickname','idgame','wa','usia','level','cn'].forEach(k => setMsg(k, ''));
+    form.querySelectorAll('input').forEach(i => i.classList.remove('invalid'));
+
+    if (nick.length < 2) { setMsg('nickname', 'Isi nickname minimal 2 karakter.'); form.Nickname.classList.add('invalid'); ok = false; }
+    if (!/^\d{5,15}$/.test(id)) { setMsg('idgame', 'ID Game hanya angka, 5 sampai 15 digit.'); form['ID Game'].classList.add('invalid'); ok = false; }
+    if (!/^(\+62|62|0)8\d{7,12}$/.test(wa)) { setMsg('wa', 'Nomor tidak valid. Contoh: 081234567890'); form['No. HP / WhatsApp'].classList.add('invalid'); ok = false; }
+    if (!usia || usia < 10 || usia > 80) { setMsg('usia', 'Isi usia antara 10 sampai 80.'); form.Usia.classList.add('invalid'); ok = false; }
+    if (!form.querySelector('input[name="Level Akun"]:checked')) { setMsg('level', 'Pilih level akun.'); ok = false; }
+    if (!form.querySelector('input[name="Siap Cn"]:checked')) { setMsg('cn', 'Pilih salah satu.'); ok = false; }
+    return ok;
+  }
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    formError.textContent = '';
+    if (!validate()) return;
+
+    btn.disabled = true;
+    btn.textContent = 'Mengirim...';
+
+    try {
+      const res = await fetch('https://formsubmit.co/ajax/' + encodeURIComponent(EMAIL_TUJUAN), {
+        method: 'POST',
+        headers: { 'Accept': 'application/json' },
+        body: new FormData(form)
+      });
+      const data = await res.json();
+      if (!res.ok || data.success === 'false') throw new Error(data.message || 'Gagal');
+      form.style.display = 'none';
+      done.style.display = 'block';
+    } catch (err) {
+      formError.textContent = 'Data belum terkirim. Periksa koneksi lalu tekan Daftar sekarang lagi.';
+    } finally {
+      btn.disabled = false;
+      btn.textContent = 'Daftar sekarang';
+    }
+  });
+
+  document.getElementById('again').addEventListener('click', () => {
+    form.reset();
+    done.style.display = 'none';
+    form.style.display = 'block';
+  });
+</script>
+</body>
+</html>
