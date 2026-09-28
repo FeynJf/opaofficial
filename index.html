@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OPA OFFICIAL — Guild Free Fire</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="noise"></div>
+
+<!-- ============ HOTBAR ============ -->
+<header class="hotbar" id="hotbar">
+  <div class="hotbar__inner">
+    <a class="hotbar__brand" href="#home" data-nav="home">
+      <img src="logo.png" alt="OPA OFFICIAL">
+      <span>OPA<i>|</i>OFFICIAL</span>
+    </a>
+
+    <nav class="hotbar__nav" id="nav">
+      <a href="#home" data-nav="home" class="active">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>
+        <span>Home</span>
+      </a>
+      <a href="#anggota" data-nav="anggota">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><circle cx="17" cy="9" r="2.5"/><path d="M16 14.2a5 5 0 0 1 5.5 4.8"/></svg>
+        <span>Anggota</span>
+      </a>
+      <a href="#register" data-nav="register">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M9 14h6M9 18h4"/></svg>
+        <span>Register</span>
+      </a>
+    </nav>
+  </div>
+</header>
+
+<main class="main">
+
+  <!-- ================= HOME ================= -->
+  <section class="view active" id="view-home">
+    <div class="hero">
+      <img src="logo.png" alt="OPA OFFICIAL" class="hero__logo">
+      <div class="hero__body">
+        <p class="hero__tag">Free Fire Guild</p>
+        <h1 class="hero__title">OPA OFFICIAL</h1>
+        <p class="hero__desc">Guild yang solid, siap perang, siap juara. Gabung kalau kamu siap bawa nama OPA.</p>
+        <a href="#register" data-nav="register" class="btn btn--primary">Daftar Sekarang</a>
+      </div>
+      <div class="hero__stats">
+        <div class="hero__stat"><span id="statAccepted">0</span><small>Anggota</small></div>
+        <div class="hero__stat"><span id="statSlot">-</span><small>Slot</small></div>
+        <div class="hero__stat"><span id="statLevel">-</span><small>Level</small></div>
+      </div>
+    </div>
+
+    <div class="cards" id="infoCards"></div>
+  </section>
+
+  <!-- ================= ANGGOTA ================= -->
+  <section class="view" id="view-anggota">
+    <header class="view__head">
+      <p class="eyebrow">Roster</p>
+      <h1 class="view__title">Anggota</h1>
+      <p class="view__sub">Daftar anggota yang sudah diterima dan yang masih menunggu.</p>
+    </header>
+
+    <div class="tabs" id="memberTabs">
+      <button class="tabs__btn active" data-filter="diterima">Diterima <b id="cntAccepted">0</b></button>
+      <button class="tabs__btn" data-filter="menunggu">Belum diterima <b id="cntPending">0</b></button>
+    </div>
+
+    <input type="search" class="search" id="memberSearch" placeholder="Cari nama atau ID...">
+
+    <div class="list" id="memberList"></div>
+    <p class="empty" id="memberEmpty" hidden>Belum ada data.</p>
+  </section>
+
+  <!-- ================= REGISTER ================= -->
+  <section class="view" id="view-register">
+    <header class="view__head">
+      <p class="eyebrow">Bergabung</p>
+      <h1 class="view__title">Daftar Anggota</h1>
+    </header>
+
+    <!-- Wizard progress: lingkaran bernomor terhubung garis -->
+    <div class="wizard" id="steps">
+      <div class="wizard__node active" data-node="1"><span>1</span><small>Syarat</small></div>
+      <div class="wizard__line"></div>
+      <div class="wizard__node" data-node="2"><span>2</span><small>Fasilitas</small></div>
+      <div class="wizard__line"></div>
+      <div class="wizard__node" data-node="3"><span>3</span><small>Formulir</small></div>
+    </div>
+
+    <!-- STEP 1: Peraturan -->
+    <div class="step active" data-step="1">
+      <div class="wizard-card">
+        <h2 class="wizard-card__title">Persyaratan Bergabung</h2>
+        <p class="wizard-card__sub">Pastikan kamu memenuhi semua poin berikut sebelum mendaftar.</p>
+
+        <div class="rules-grid">
+          <div class="rule"><em>01</em><h3>Akun pribadi</h3><p>Bukan akun titipan</p></div>
+          <div class="rule"><em>02</em><h3>No double guild</h3><p>Tidak tergabung di guild lain</p></div>
+          <div class="rule"><em>03</em><h3>Player aktif</h3><p>Aktif di game maupun Discord</p></div>
+          <div class="rule"><em>04</em><h3>Usia 18+</h3><p>Sudah dewasa</p></div>
+          <div class="rule"><em>05</em><h3>No kutu loncat</h3><p>Tidak pindah-pindah guild</p></div>
+          <div class="rule"><em>06</em><h3>Level minimal 40</h3><p>Level minimum untuk bergabung</p></div>
+          <div class="rule"><em>07</em><h3>Siap CN</h3><p>War / room / turnamen</p></div>
+          <div class="rule"><em>08</em><h3>Good attitude</h3><p>Asik, sopan, mudah berbaur</p></div>
+          <div class="rule"><em>09</em><h3>Siap membentuk tim</h3><p>Aktif berkontribusi di guild</p></div>
+          <div class="rule"><em>10</em><h3>No cheat</h3><p>Tidak pakai cheat / pihak ketiga</p></div>
+          <div class="rule"><em>11</em><h3>Siap ikut arahan</h3><p>Mengikuti peraturan guild</p></div>
+        </div>
+
+        <label class="agree">
+          <input type="checkbox" id="agreeCheck">
+          <span class="agree__box"></span>
+          <span class="agree__text">Saya sudah baca dan setuju dengan semua persyaratan di atas</span>
+        </label>
+        <button class="btn btn--primary btn--block" id="toStep2" disabled>Lanjut ke Fasilitas</button>
+      </div>
+    </div>
+
+    <!-- STEP 2: Fasilitas -->
+    <div class="step" data-step="2">
+      <div class="wizard-card">
+        <h2 class="wizard-card__title">Guild Facilities</h2>
+        <p class="wizard-card__sub">Apa yang kamu dapat sebagai anggota OPA OFFICIAL.</p>
+
+        <div class="facility-list">
+          <div class="facility"><span>1</span><div><h3>FT ditanggung admin</h3><p>Biaya full team war ditanggung oleh admin guild.</p></div></div>
+          <div class="facility"><span>2</span><div><h3>Turnamen guild berhadiah</h3><p>Ikut turnamen internal guild dengan hadiah menarik.</p></div></div>
+        </div>
+        <p class="note">Fasilitas akan terus bertambah seiring guild makin besar.</p>
+
+        <div class="row-btns">
+          <button class="btn btn--outline" data-back-step="1">Kembali</button>
+          <button class="btn btn--primary" id="toStep3">Lanjut ke Formulir</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 3: Form -->
+    <div class="step" data-step="3">
+      <div class="wizard-card">
+        <h2 class="wizard-card__title">Formulir Pendaftaran</h2>
+        <p class="wizard-card__sub">Isi data kamu dengan benar dan jujur.</p>
+
+        <form id="regForm" novalidate action="https://formspree.io/f/mzezvybr" method="POST">
+        <input type="hidden" name="_subject" value="Pendaftaran Guild Baru — OPA OFFICIAL">
+
+        <div class="field">
+          <label for="namaLengkap">Nama lengkap</label>
+          <input type="text" id="namaLengkap" name="namaLengkap" placeholder="Contoh: Muhammad Rafi Ardiansyah" autocomplete="name">
+          <span class="field__error" data-error-for="namaLengkap"></span>
+        </div>
+
+        <div class="field">
+          <label for="nama">Nama in-game</label>
+          <input type="text" id="nama" name="nama" placeholder="Contoh: Rafi">
+          <span class="field__error" data-error-for="nama"></span>
+        </div>
+
+        <div class="field">
+          <label for="idGame">ID Free Fire</label>
+          <input type="text" id="idGame" name="idGame" placeholder="Contoh: 123456789" inputmode="numeric">
+          <span class="field__error" data-error-for="idGame"></span>
+        </div>
+
+        <div class="field">
+          <label>Gender</label>
+          <div class="pills">
+            <label class="pill"><input type="radio" name="gender" value="Laki-laki"><span>Laki-laki</span></label>
+            <label class="pill"><input type="radio" name="gender" value="Perempuan"><span>Perempuan</span></label>
+          </div>
+          <span class="field__error" data-error-for="gender"></span>
+        </div>
+
+        <div class="grid2">
+          <div class="field">
+            <label for="level">Level akun</label>
+            <input type="number" id="level" name="level" placeholder="Min. 40" min="1" inputmode="numeric">
+            <span class="field__error" data-error-for="level"></span>
+          </div>
+          <div class="field">
+            <label for="usia">Usia</label>
+            <input type="number" id="usia" name="usia" placeholder="Min. 18" min="1" inputmode="numeric">
+            <span class="field__error" data-error-for="usia"></span>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="waktuCN">Waktu CN (Change Nickname)</label>
+          <select id="waktuCN" name="waktuCN">
+            <option value="" disabled selected>Pilih waktu CN</option>
+            <option>CN sekarang</option>
+            <option>1 hari</option><option>2 hari</option><option>3 hari</option>
+            <option>4 hari</option><option>5 hari</option><option>6 hari</option><option>7 hari</option>
+          </select>
+          <span class="field__error" data-error-for="waktuCN"></span>
+        </div>
+
+        <div class="field">
+          <label for="hp">Nomor HP / WhatsApp</label>
+          <input type="tel" id="hp" name="hp" placeholder="Contoh: 081234567890" inputmode="numeric" autocomplete="tel">
+          <span class="field__hint">Pastikan nomor aktif dan benar, dipakai admin untuk menghubungi kamu.</span>
+          <span class="field__error" data-error-for="hp"></span>
+        </div>
+
+        <div class="field">
+          <label for="email">Email</label>
+          <div class="email-card">
+            <div class="email-card__icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><path d="M22 6l-10 7L2 6"/></svg>
+            </div>
+            <div class="email-card__body">
+              <input type="email" id="email" name="email" placeholder="nama@gmail.com" autocomplete="email">
+              <span>Dipakai admin untuk kirim info penerimaan guild</span>
+            </div>
+          </div>
+          <span class="field__error" data-error-for="email"></span>
+        </div>
+
+        <div class="field">
+          <label>Apakah kamu punya Discord?</label>
+          <div class="pills">
+            <label class="pill"><input type="radio" name="hasDiscord" value="ya"><span>Ya</span></label>
+            <label class="pill"><input type="radio" name="hasDiscord" value="tidak"><span>Tidak</span></label>
+          </div>
+          <span class="field__error" data-error-for="hasDiscord"></span>
+        </div>
+
+        <div class="collapse" id="discordField">
+          <div class="collapse__inner">
+            <div class="field">
+              <label for="discordUsername">Username Discord</label>
+              <input type="text" id="discordUsername" name="discordUsername" placeholder="Contoh: rafi.opa">
+              <span class="field__error" data-error-for="discordUsername"></span>
+            </div>
+          </div>
+        </div>
+
+        <p class="form-alert" id="formAlert"></p>
+
+        <div class="row-btns">
+          <button type="button" class="btn btn--outline" data-back-step="2">Kembali</button>
+          <button type="submit" class="btn btn--primary" id="btnSubmit"><span>Kirim Pendaftaran</span></button>
+        </div>
+      </form>
+      </div>
+    </div>
+
+    <!-- SUKSES -->
+    <div class="step" data-step="done">
+      <div class="wizard-card done">
+        <div class="done__badge">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+        </div>
+        <h2 class="done__title" id="doneTitle">Pendaftaran terkirim</h2>
+        <p class="done__sub" id="doneSub">Admin OPA akan menghubungi kamu lewat WhatsApp untuk proses selanjutnya.</p>
+
+        <div class="summary" id="summaryBox"></div>
+
+        <div class="cn-card">
+          <span class="cn-card__label" id="cnLabel">Format Change Nickname</span>
+          <p class="cn-card__value" id="cnValue">OPA • Nickname</p>
+          <button class="btn btn--outline btn--sm" id="btnCopyCN"><span>Salin format</span></button>
+          <p class="cn-card__note">Buka Free Fire, Edit Profil, Nickname, lalu tempel format di atas.</p>
+        </div>
+
+        <a href="#home" data-nav="home" class="btn btn--outline btn--block">Kembali ke Home</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <img src="logo.png" alt="">
+  <p>&copy; OPA OFFICIAL &middot; Free Fire Guild</p>
+</footer>
+
+<script src="members.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
