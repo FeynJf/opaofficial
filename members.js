@@ -35,24 +35,31 @@ const GUILD_STATS = {
 // tanggal: tanggal diterima / mendaftar (bebas ditulis, contoh "28 September 2026, 14:05")
 const MEMBERS = [
   {
-    nama: "OPA • Contoh",
+    nama: "OPA • Mᴀʙᴏᴏ",
     id: "123456789",
-    jabatan: "Leader",
+    jabatan: "LEADER",
     status: "diterima",
-    tanggal: "28 September 2026, 14:05"
+    tanggal: "20 September 2026, 14:05"
   },
   {
-    nama: "OMA • Contoh",
+    nama: "OPA • Ŧeyͷ",
     id: "987654321",
-    jabatan: "Anggota",
+    jabatan: "OFFICER",
     status: "diterima",
-    tanggal: "28 September 2026, 15:30"
+    tanggal: "20 September 2026, 15:30"
   },
   {
-    nama: "OPA • Calon",
+    nama: "OPA • Nox",
     id: "111222333",
     jabatan: "Anggota",
-    status: "menunggu",
+    status: "diterima",
+    tanggal: "28 September 2026, 16:10"
+  },
+  {
+    nama: "OPA • Nox",
+    id: "111222333",
+    jabatan: "Anggota",
+    status: "diterima",
     tanggal: "28 September 2026, 16:10"
   }
 ];
