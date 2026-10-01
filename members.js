@@ -42,7 +42,7 @@ const MEMBERS = [
     tanggal: "30 September 2026, 16:00"
   },
   {
-    nama: "OPA • Feyu",
+    nama: "OPA • Feyn",
     id: "2377250071",
     jabatan: "Officer",
     status: "diterima",
